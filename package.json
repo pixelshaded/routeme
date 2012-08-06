@@ -1,0 +1,25 @@
+{
+    "name": "routeme"
+  , "description": "Named routing with json validation, URL generation, and more. Can tag team with Express."
+  , "version": "0.0.1"
+  , "author": {
+	  "name": "Alexander Fisher",
+	  "email": "alexanderf@getlimed.com",
+	  "url": "http://www.alexander-fisher.com"
+  }
+  , "private": false
+  , "bugs": {
+	  "url": "https://github.com/pixelshaded/routeme/issues"
+  }
+  ,"repository": {
+	  "type": "git",
+	  "url": "https://github.com/pixelshaded/routeme"
+  }
+  , "engines":{
+	  "node": ">=0.8.0",
+	  "express": "2.5.11"
+  }
+  , "dependencies": {
+    "colors": "0.6.0-1"
+  }
+}
