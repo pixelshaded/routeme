@@ -7,7 +7,6 @@
 	  "email": "alexanderf@getlimed.com",
 	  "url": "http://www.alexander-fisher.com"
   }
-  , "private": false
   , "bugs": {
 	  "url": "https://github.com/pixelshaded/routeme/issues"
   }
@@ -16,7 +15,7 @@
 	  "url": "https://github.com/pixelshaded/routeme"
   }
   , "engines":{
-	  "node": ">=0.8.0",
+	  "node": ">=0.8.0"
   }
   , "dependencies": {
     "colors": "0.6.0-1"
