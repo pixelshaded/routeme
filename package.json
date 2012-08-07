@@ -1,7 +1,7 @@
 {
     "name": "routeme"
   , "description": "Named routing with json validation, URL generation, and more. Can tag team with Express."
-  , "version": "0.0.3"
+  , "version": "0.0.4"
   , "author": {
 	  "name": "Alexander Fisher",
 	  "email": "alexanderf@getlimed.com",

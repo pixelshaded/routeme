@@ -6,6 +6,11 @@ The power of routeme is that your routes get defined only once, but can be refer
 
 #Usage
 
+###Install
+<pre>
+npm install routeme
+</pre>
+
 ###Instantiation
 Create a new routeme instance. This will go through each file in the specified folder and gather information on your controllers. More on controller set up [later](#controller-setup).
 ```javascript
@@ -60,7 +65,7 @@ exports.routes = [
 	schema: schema.resendValidationEmail
 },
 { 
-	uri: '/claim-email', method: 'post', 
+	uri: '/claim-email', method: 'get', 
 	name: 'email.claimEmail', action: claimEmail,
 	schema: schema.claimEmail
 },
@@ -129,7 +134,7 @@ var routeObj = routeme.findRouteByUri('/email/claim-email', 'get');
 Used after middleware setup (usually), this goes through all the routes on the instance of routeme and calls app.VERB.
 ```javascript
 app = module.exports = express.createServer();
-… middleware etc …
+//middleware etc
 routeme.bindToExpress(app);
 ```
 
