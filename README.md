@@ -36,7 +36,7 @@ routeme.scan('/path/to/controller/folder');
 ###Middleware Json Validation
 Use this before the router so you can validate the incoming request (post data or querystring) against your schema before forwarding along the middleware chain. [Amanda](https://github.com/Baggz/Amanda) is used for validation. It has been tweaked to properly support ISO 8601 datetime validation and give back user friendly errors for email matching. If this get's fixed in the package I will add it as a dependency.
 ```javascript
-app.use(routeme.validateSchema);
+app.use(routeme.validateRequestSchema);
 ```
 
 ###Bind to Express Router
@@ -159,6 +159,9 @@ GET      /email/resend-validation-email     email.resendValidationEmail
 POST     /email/claim-email                 email.claimEmail
 POST     /email/validate-email              email.validateEmail
 </pre>
+
+###validateRequestSchema
+Middleware function that will get route for request URL and validate request data against route schema.
 
 
 
