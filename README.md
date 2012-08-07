@@ -21,7 +21,7 @@ var routeme = new Routeme();
 A second parameter is optional and it should be a callback to call when the json validation middleware recieves errors. The middleware calls next() on success.
 ```javascript
 var Routeme = require('routeme');
-var routeme = new Routeme('/path/to/controller/folder', function(errors, req, res, next){
+var routeme = new Routeme(function(errors, req, res, next){
 	res.json({ "errors" : errors }, 404);
 });
 ```
