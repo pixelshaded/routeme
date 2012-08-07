@@ -8,30 +8,30 @@ The power of routeme is that your routes get defined only once, but can be refer
 
 ###Instantiation
 Create a new routeme instance. This will go through each file in the specified folder and gather information on your controllers. More on controller set up [later](#controller-setup).
-<pre>
+```javascript
 var Routeme = require('routeme');
 var routeme = new Routeme('/path/to/controller/folder');
-</pre>
+```
 
 A second parameter is optional and it should be a callback to call when the json validation middleware recieves errors. The middleware calls next() on success.
-<pre>
+```javascript
 var Routeme = require('routeme');
 var routeme = new Routeme('/path/to/controller/folder', function(errors, req, res, next){
 	res.json({ "errors" : errors }, 404);
 });
-</pre>
+```
 
 ###Middleware Json Validation
 Use this before the router so you can validate the incoming request before forwarding along the middleware chain. [Amanda](https://github.com/Baggz/Amanda) is used for validation. It has been tweaked to properly support ISO 8601 datetime validation and give back user friendly errors for email matching. If this get's fixed in the package I will add it as a dependency.
-<pre>
+```javascript
 app.use(routeme.validateSchema);
-</pre>
+```
 
 ###Bind to Express Router
 This should be done after environment/middleware setup for most projects. It simply goes through all the routes it found in the controller folder, and based on their methods, calls app.VERB (this internally calls app.use in express, which is why it should be called after your middleware).
-<pre>
+```javascript
 routeme.bindToExpress(app);
-</pre>
+```
 
 #Controller Setup
 Your controllers should export 2 parameters, one is optional:
@@ -39,7 +39,7 @@ Your controllers should export 2 parameters, one is optional:
 * prefix: a string to prepend to all route URIs
 
 Here is an example setup for a controller
-<pre>
+```javascript
 var schema = {};
 schema['resendValidationEmail'] = schema['claimEmail'] = {
 	type: 'object', properties: {
@@ -84,7 +84,7 @@ function claimEmail(req, res, next){
 function validateEmail(req, res, next){
 	res.send('Validate Email', 200);
 }
-</pre>
+```
 
 ###Route Object
 The route object has 5 properties, 1 of which is optional.
@@ -101,37 +101,37 @@ In the above example, because prefix is defined, /email/resend-validation-email 
 #Routeme API
 
 ###generateURL(routename, data)
-<pre>
+```javascript
 var url = routeme.generateURL('email.claimEmail', {email : 'myemail@mail.com'});
-</pre>
+```
 
 Data is optional and used to create a querystring for get URLs. The above would return (based on example controller): 
-<pre>
+```javascript
 '/email/claim-email?email=myemail%40mail.com'
-</pre>
+```
 
 ###findRouteByName(name)
-<pre>
+```javascript
 var routeObj = routeme.findRouteByName('email.claimEmail');
-</pre>
+```
 
 This is essentially the same as
-<pre>
+```javascript
 var routeObj = routeme.routes['email.claimEmail'];
-</pre>
+```
 
 ###findRouteByUri(uri, method)
-<pre>
+```javascript
 var routeObj = routeme.findRouteByUri('/email/claim-email', 'get');
-</pre>
+```
 
 ###bindToExpress(app)
 Used after middleware setup (usually), this goes through all the routes on the instance of routeme and calls app.VERB.
-<pre>
+```javascript
 app = module.exports = express.createServer();
 … middleware etc …
 routeme.bindToExpress(app);
-</pre>
+```
 
 ###printRouteMap()
 For debugging purposes, this will print a list of all the routes in the instance of routeme. Example:
