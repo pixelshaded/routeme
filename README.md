@@ -12,10 +12,10 @@ npm install routeme
 </pre>
 
 ###Instantiation
-Create a new routeme instance. This will go through each file in the specified folder and gather information on your controllers. More on controller set up [later](#controller-setup).
+Create a new routeme instance.
 ```javascript
 var Routeme = require('routeme');
-var routeme = new Routeme('/path/to/controller/folder');
+var routeme = new Routeme();
 ```
 
 A second parameter is optional and it should be a callback to call when the json validation middleware recieves errors. The middleware calls next() on success.
@@ -26,8 +26,15 @@ var routeme = new Routeme('/path/to/controller/folder', function(errors, req, re
 });
 ```
 
+###Scan Controllers
+This will go through each file in the specified folder (and subfolders) and gather information on your controllers. More on controller set up [later](#controller-setup). You can call this multiple times on different folders in case your controllers are not under one sub folder. Remember that routeme will be an instance (if you used new keyword). This means you can create multiple routeme objects that have different routes in them if you need to segregate your routes.
+
+```javascript
+routeme.scan('/path/to/controller/folder');
+```
+
 ###Middleware Json Validation
-Use this before the router so you can validate the incoming request before forwarding along the middleware chain. [Amanda](https://github.com/Baggz/Amanda) is used for validation. It has been tweaked to properly support ISO 8601 datetime validation and give back user friendly errors for email matching. If this get's fixed in the package I will add it as a dependency.
+Use this before the router so you can validate the incoming request (post data or querystring) against your schema before forwarding along the middleware chain. [Amanda](https://github.com/Baggz/Amanda) is used for validation. It has been tweaked to properly support ISO 8601 datetime validation and give back user friendly errors for email matching. If this get's fixed in the package I will add it as a dependency.
 ```javascript
 app.use(routeme.validateSchema);
 ```
@@ -128,6 +135,13 @@ var routeObj = routeme.routes['email.claimEmail'];
 ###findRouteByUri(uri, method)
 ```javascript
 var routeObj = routeme.findRouteByUri('/email/claim-email', 'get');
+```
+
+###scan(folderPath)
+Process all controllers within a folder and its sub folders. This will get the route data objects in to routeme.
+
+```javascript
+routeme.scan('/path/to/controller/folder');
 ```
 
 ###bindToExpress(app)
