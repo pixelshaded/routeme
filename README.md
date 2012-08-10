@@ -72,7 +72,7 @@ exports.routes = [
 	schema: schema.resendValidationEmail
 },
 { 
-	uri: '/claim-email', method: 'get', 
+	uri: '/:some_param/claim-email', method: 'get', 
 	name: 'email.claimEmail', action: claimEmail,
 	schema: schema.claimEmail
 },
@@ -112,14 +112,14 @@ In the above example, because prefix is defined, /email/resend-validation-email 
 
 #Routeme API
 
-###generateURL(routename, data)
+###generateURL(routename, query, params)
 ```javascript
-var url = routeme.generateURL('email.claimEmail', {email : 'myemail@mail.com'});
+var url = routeme.generateURL('email.claimEmail', {email : 'myemail@mail.com'}, {some_param: 'testparams');
 ```
 
-Data is optional and used to create a querystring for get URLs. The above would return (based on example controller): 
+Query and params are optional and used to create a querystring for get URLs and fill parameters. The above would return (based on example controller with a uri of '/:some_param/claim-email' and prefix of '/email'):
 ```javascript
-'/email/claim-email?email=myemail%40mail.com'
+'/email/testparams/claim-email?email=myemail%40mail.com'
 ```
 
 ###findRouteByName(name)
@@ -134,11 +134,20 @@ var routeObj = routeme.routes['email.claimEmail'];
 
 ###findRouteByUri(uri, method)
 ```javascript
-var routeObj = routeme.findRouteByUri('/email/claim-email', 'get');
+var routeObj = routeme.findRouteByUri('/email/:some_param/claim-email', 'get');
 ```
 
+###findRouteByMatch(reqUrl, method)
+This is mainly used by the middleware to match routes for validating schema. The router will try to match the request URL and method to a route uri and if successful, return the route object.
+
+```javascript
+var routeObj = routeme.findRouteByMatch(req.url, req.method);
+```
+
+So for example, a request url of /email/wowzers/claim-email?email=someemail%40mail.com would match the uri '/email/:some_param/claim-email'.
+
 ###scan(folderPath)
-Process all controllers within a folder and its sub folders. This will get the route data objects in to routeme.
+Process all controllers within a folder and its sub folders. This will get the route data objects in to routeme. Note that the prefix is prepended to the route object during a scan.
 
 ```javascript
 routeme.scan('/path/to/controller/folder');
